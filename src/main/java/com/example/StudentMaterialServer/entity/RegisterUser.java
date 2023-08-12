@@ -29,6 +29,8 @@ public class RegisterUser {
     @Column(name = "pass_word", nullable = false)
     private String passWord;
 
+
+
     public int getId() {
         return id;
     }

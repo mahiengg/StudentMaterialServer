@@ -2,6 +2,7 @@ package com.example.StudentMaterialServer.services.IMPL;
 
 import com.example.StudentMaterialServer.DTOs.RegisterUserDTO;
 import com.example.StudentMaterialServer.DTOs.UserDTO;
+import com.example.StudentMaterialServer.Exceptions.UserAlreadyExistsException;
 import com.example.StudentMaterialServer.entity.RegisterUser;
 import com.example.StudentMaterialServer.repositories.RegisterNewUser;
 import com.example.StudentMaterialServer.services.RegisterUserService;
@@ -10,7 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserRegistrationIMPL implements RegisterUserService {
+public class UserRegistrationimpl implements RegisterUserService {
 
     @Autowired
     private RegisterNewUser registerNewUser;
@@ -19,6 +20,10 @@ public class UserRegistrationIMPL implements RegisterUserService {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     @Override
     public UserDTO save(RegisterUserDTO user) {
+
+        if (registerNewUser.existsByEmail(user.getEmail())) {
+            throw new UserAlreadyExistsException("Email already exists");
+        }
 
         RegisterUser newUser = new RegisterUser();
         newUser.setFirstName(user.getFirstName());

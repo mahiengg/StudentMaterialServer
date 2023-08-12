@@ -1,16 +1,16 @@
 package com.example.StudentMaterialServer.repositories;
 
 import com.example.StudentMaterialServer.entity.RegisterUser;
+import com.example.StudentMaterialServer.entity.UserMaterialList;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @EnableJpaRepositories
 @Repository
-public interface UserRespository extends JpaRepository<RegisterUser, Integer> {
+public interface MaterialRepository extends JpaRepository<UserMaterialList, Long> {
+    List<UserMaterialList> findByUser(RegisterUser user);
 
-
-    RegisterUser findFirstByEmail(String username);
-
-    RegisterUser getUserByEmail(String name);
 }

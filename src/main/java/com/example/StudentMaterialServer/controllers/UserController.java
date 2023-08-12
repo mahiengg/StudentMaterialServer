@@ -3,9 +3,9 @@ package com.example.StudentMaterialServer.controllers;
 import com.example.StudentMaterialServer.DTOs.AuthenticateDTO;
 import com.example.StudentMaterialServer.DTOs.RegisterUserDTO;
 import com.example.StudentMaterialServer.DTOs.UserDTO;
+import com.example.StudentMaterialServer.Exceptions.UserAlreadyExistsException;
 import com.example.StudentMaterialServer.entity.AuthenticateUser;
 import com.example.StudentMaterialServer.entity.RegisterUser;
-import com.example.StudentMaterialServer.entity.User;
 import com.example.StudentMaterialServer.repositories.UserRespository;
 import com.example.StudentMaterialServer.services.RegisterUserService;
 import com.example.StudentMaterialServer.services.Userservicee;
@@ -59,13 +59,18 @@ public class UserController {
     @PostMapping("/sign-up")
     public ResponseEntity<?> registerUser(@RequestBody RegisterUserDTO newUser) throws Exception {
         System.out.println(newUser);
-        UserDTO user =  this.registerUserService.save(newUser);
-        System.out.println(user);
-        if(user == null){
-            return new ResponseEntity("User not created... try again", HttpStatus.BAD_REQUEST);
-        }
+        try {
+            UserDTO user = this.registerUserService.save(newUser);
+            System.out.println(user);
+            if (user == null) {
+                return new ResponseEntity("User not created... try again", HttpStatus.BAD_REQUEST);
+            }
 
-        return new ResponseEntity("User created successfully", HttpStatus.CREATED);
+            return new ResponseEntity("User created successfully", HttpStatus.CREATED);
+        }catch (UserAlreadyExistsException e)
+        {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
 
 
 
