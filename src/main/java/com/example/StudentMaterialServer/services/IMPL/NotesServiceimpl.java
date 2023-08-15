@@ -34,9 +34,7 @@ public class NotesServiceimpl implements NotesService {
         addNote.setNoteContent(notes.getNoteContent());
         addNote.setUser(user);
         addNote.setMaterialId(notes.getMaterialId());
-
         Notes newNoteAdded = notesRepository.save(addNote);
-
         NotesDTO notesDTO = new NotesDTO();
         notesDTO.setId(newNoteAdded.getId());
         notesDTO.setNoteContent(newNoteAdded.getNoteContent());
@@ -47,8 +45,6 @@ public class NotesServiceimpl implements NotesService {
 
     @Override
     public List<Notes> getMaterialNotes(Long materialId) {
-
-
          return notesRepository.findByMaterialId(materialId);
     }
 }

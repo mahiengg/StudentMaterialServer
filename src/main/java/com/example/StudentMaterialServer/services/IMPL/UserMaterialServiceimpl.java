@@ -25,7 +25,6 @@ public class UserMaterialServiceimpl implements UserMaterialService {
 
     @Override
     public List<UserMaterialList> getUserMaterial( RegisterUser user) {
-
         return materialRepository.findByUser(user);
     }
 }

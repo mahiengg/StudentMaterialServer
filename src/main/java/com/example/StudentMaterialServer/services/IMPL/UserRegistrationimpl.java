@@ -18,6 +18,7 @@ public class UserRegistrationimpl implements RegisterUserService {
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
     @Override
     public UserDTO save(RegisterUserDTO user) {
 

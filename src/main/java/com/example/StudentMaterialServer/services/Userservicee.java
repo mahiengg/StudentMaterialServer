@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 
 @Service
-public class Userservicee  implements UserDetailsService {
+public class Userservicee implements UserDetailsService {
 
     @Autowired
     private UserRespository userRepository;
@@ -19,12 +19,11 @@ public class Userservicee  implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         RegisterUser user = userRepository.findFirstByEmail(username);
-
-        if(user == null){
-            throw  new UsernameNotFoundException("User not found");
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found");
         }
         String encodedPassword = user.getPassWord();
         System.out.println(encodedPassword);
-        return new org.springframework.security.core.userdetails.User(user.getEmail(),user.getPassWord(), new ArrayList<>());
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassWord(), new ArrayList<>());
     }
 }

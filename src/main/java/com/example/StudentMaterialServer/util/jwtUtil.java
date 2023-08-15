@@ -17,9 +17,9 @@ public class jwtUtil {
 
     private static final String SECRET_KEY = "studentDashboar5772772";
 
-    public String generateToken(String userName){
+    public String generateToken(String userName) {
         Map<String, Object> claims = new HashMap<>();
-        return  createToken(claims, userName);
+        return createToken(claims, userName);
     }
 
     private String createToken(Map<String, Object> claims, String userName) {
@@ -30,9 +30,9 @@ public class jwtUtil {
 
     }
 
-    public Boolean validateToken(String token, UserDetails userDetails){
+    public Boolean validateToken(String token, UserDetails userDetails) {
         final String userName = extractUsername(token);
-        return (userName.equals(userDetails.getUsername())&& !isTokenExpired(token));
+        return (userName.equals(userDetails.getUsername()) && !isTokenExpired(token));
 
     }
 
@@ -49,7 +49,7 @@ public class jwtUtil {
         return extractClaim(token, Claims::getSubject);
     }
 
-    public <T> T extractClaim(String token, Function<Claims ,T> claimsResolver) {
+    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
 
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);

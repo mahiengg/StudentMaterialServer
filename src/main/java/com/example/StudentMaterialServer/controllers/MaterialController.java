@@ -11,29 +11,30 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class MaterialController {
 
-  @Autowired
-  private UserMaterialService userMaterialService;
+    @Autowired
+    private UserMaterialService userMaterialService;
 
-  @Autowired
-  private UserRespository userRespository;
+    @Autowired
+    private UserRespository userRespository;
 
     @PostMapping("/addMaterial")
     public UserMaterialList uploadPDFMaterial(Principal principal, @RequestBody UserMaterialList pdfMaterial) {
-         System.out.println("userDetails" + principal.getName());
+        System.out.println("userDetails" + principal.getName());
         RegisterUser user = userRespository.getUserByEmail(principal.getName()); //
 
         System.out.println("userDetails" + user.getEmail());
-        System.out.println("pdfMaterial"+ pdfMaterial);
+        System.out.println("pdfMaterial" + pdfMaterial);
 
         return userMaterialService.uploadPDFMaterial(pdfMaterial, user);
     }
 
-    @GetMapping ("/materials")
-    public List<UserMaterialList> getuserList(Principal principal){
+    @GetMapping("/materials")
+    public List<UserMaterialList> getUserList(Principal principal) {
         RegisterUser user = userRespository.getUserByEmail(principal.getName());
-       return userMaterialService.getUserMaterial(user);
+        return userMaterialService.getUserMaterial(user);
     }
 }
