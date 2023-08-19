@@ -10,5 +10,7 @@ public interface UserMaterialService {
 
     public UserMaterialList uploadPDFMaterial(UserMaterialList pdfMaterial, RegisterUser user);
 
+    public boolean deleteUserPDFMaterial(Long id);
+
     public List<UserMaterialList> getUserMaterial( RegisterUser user);
 }

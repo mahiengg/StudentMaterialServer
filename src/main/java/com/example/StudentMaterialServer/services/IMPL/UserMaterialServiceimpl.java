@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserMaterialServiceimpl implements UserMaterialService {
@@ -21,6 +22,20 @@ public class UserMaterialServiceimpl implements UserMaterialService {
         System.out.println(pdfMaterial);
         pdfMaterial.setUser(user);
         return materialRepository.save(pdfMaterial);
+    }
+
+    @Override
+    public boolean deleteUserPDFMaterial(Long id) {
+        Optional<UserMaterialList> optionalMaterial = materialRepository.findById(id);
+
+        if (optionalMaterial.isPresent()) {
+            UserMaterialList notesToDelete = optionalMaterial.get();
+            materialRepository.delete(notesToDelete);
+            return true; // Notes deleted successfully
+        } else {
+            return false; // Notes not found or could not be deleted
+        }
+
     }
 
     @Override
